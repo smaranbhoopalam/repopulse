@@ -1,0 +1,9 @@
+rules:
+  # Type A — Forbidden cross-layer access paths (direct or indirect)
+  - frontend_cannot_access_database
+  - ui_cannot_access_infrastructure
+  - api_cannot_access_database
+
+  # Type B — Modules that must remain perfectly isolated
+  - auth_module_must_remain_isolated
+  - payments_module_must_remain_isolated

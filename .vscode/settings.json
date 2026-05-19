@@ -1,0 +1,37 @@
+{
+  // ─── Python Language Server ──────────────────────────────────────────────
+  // Use Pylance (stable, Microsoft) instead of Pyrefly (experimental, Meta).
+  // Pyrefly generates hundreds of false-positive errors via __pyrefly_virtual__
+  // in-memory ghost files which do not correspond to real code issues.
+  "python.languageServer": "Pylance",
+
+  // ─── Type Checking ───────────────────────────────────────────────────────
+  // "basic" catches real errors without being noisy about missing stubs.
+  // Switch to "strict" only when you want full mypy-level enforcement.
+  "python.analysis.typeCheckingMode": "basic",
+
+  // ─── Pyrefly — explicitly disabled ───────────────────────────────────────
+  "pyrefly.enabled": false,
+
+  // ─── Auto-import & IntelliSense ──────────────────────────────────────────
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.indexing": true,
+
+  // ─── Exclude noisy folders from analysis ─────────────────────────────────
+  "python.analysis.exclude": [
+    "**/__pycache__",
+    "**/*.pyc",
+    "**/__pyrefly_virtual__"
+  ],
+
+  // ─── Extra Paths ─────────────────────────────────────────────────────────
+  "python.analysis.extraPaths": [
+    "./driftguard-backend"
+  ],
+
+  // ─── Formatter ───────────────────────────────────────────────────────────
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": false
+  }
+}

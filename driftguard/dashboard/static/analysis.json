@@ -1,0 +1,288 @@
+{
+  "timeline": [
+    {
+      "commit": "cecd3a92",
+      "score": 83.35,
+      "architecture_score": 100.0,
+      "complexity_score": 60.68,
+      "dependency_score": 100.0,
+      "evolution_score": 62.1,
+      "team_score": 79.0,
+      "testing_score": 80.0,
+      "timestamp": 1779131318.0,
+      "author": "Pratyush",
+      "message": "Initial Commit by Patty"
+    }
+  ],
+  "reports": [
+    {
+      "commit_sha": "cecd3a92",
+      "metrics": {
+        "score": 100.0,
+        "nodes": 1,
+        "edges": 0,
+        "violations_count": 0,
+        "scc_count": 0,
+        "avg_out_degree": 0.0,
+        "complexity_ratio": 0.0
+      },
+      "violations": [],
+      "drift": {
+        "crash_alert": false,
+        "dependency_explosion": false,
+        "score_drop": 0.0,
+        "edge_growth_ratio": 0.0,
+        "deltas": {},
+        "commit_sha": "cecd3a92",
+        "previous_commit_sha": null
+      },
+      "health": {
+        "overall_score": 83.35,
+        "architecture_score": 100.0,
+        "complexity_score": 60.68,
+        "dependency_score": 100.0,
+        "evolution_score": 62.1,
+        "team_score": 79.0,
+        "testing_score": 80.0,
+        "profile": "default",
+        "weights": {
+          "architecture": 0.3,
+          "complexity": 0.2,
+          "dependency": 0.2,
+          "evolution": 0.15,
+          "team": 0.1,
+          "testing": 0.05
+        }
+      },
+      "complexity": {
+        "avg_cyclomatic": 2.75,
+        "max_cyclomatic": 8.0,
+        "avg_cognitive": 41.5,
+        "avg_maintainability": 42.59,
+        "total_dead_code": 22,
+        "duplication_percentage": 29.54,
+        "sub_score": 60.68
+      },
+      "dependency": {
+        "total_modules": 1,
+        "avg_fan_in": 0.0,
+        "avg_fan_out": 0.0,
+        "avg_instability": 0.0,
+        "coupling_factor": 0.0,
+        "circular_dependency_count": 0,
+        "god_module_count": 0,
+        "circular_groups": [],
+        "god_modules": [],
+        "sub_score": 100.0
+      },
+      "evolution": {
+        "hotspot_count": 0,
+        "volatile_module_count": 0,
+        "avg_ownership_hhi": 1.0,
+        "bus_factor": 1,
+        "commit_risk_score": 3.95,
+        "total_churn": 115,
+        "refactor_frequency": 0.0,
+        "hotspots": [],
+        "sub_score": 62.1
+      },
+      "team": {
+        "bus_factor": 1,
+        "contributor_count": 2,
+        "abandoned_modules": [],
+        "inactive_owners": [],
+        "concentration_hhi": 0.5,
+        "sub_score": 79.0
+      },
+      "testing": {
+        "test_to_code_ratio": 0.0,
+        "test_file_count": 0,
+        "source_file_count": 38,
+        "untested_critical_modules": [],
+        "flaky_test_indicators": [],
+        "coverage_trend_delta": 0.0,
+        "sub_score": 80.0
+      },
+      "graph_analysis": {
+        "scc_count": 0,
+        "modularity_score": 0.0,
+        "architectural_drift": 0.0,
+        "top_hubs": [
+          "healtheng"
+        ],
+        "top_bottlenecks": [
+          "healtheng"
+        ],
+        "top_risk_nodes": [
+          [
+            "healtheng",
+            0.0
+          ]
+        ]
+      },
+      "insights": [
+        {
+          "severity": "CRITICAL",
+          "category": "Team",
+          "title": "Bus Factor = 1 (Single Point of Failure)",
+          "detail": "A single contributor owns the majority of files. This is a critical knowledge risk \u2014 bus factor is 1.",
+          "commit_sha": "cecd3a92",
+          "affected_modules": []
+        },
+        {
+          "severity": "WARNING",
+          "category": "Complexity",
+          "title": "High Code Duplication (30%)",
+          "detail": "Significant code duplication detected. Extract shared utilities.",
+          "commit_sha": "cecd3a92",
+          "affected_modules": []
+        },
+        {
+          "severity": "INFO",
+          "category": "Architecture",
+          "title": "Architectural Bottlenecks Identified",
+          "detail": "High betweenness centrality detected in: healtheng. Changes here cascade widely.",
+          "commit_sha": "cecd3a92",
+          "affected_modules": [
+            "healtheng"
+          ]
+        }
+      ],
+      "recommendations": [
+        {
+          "priority": 1,
+          "category": "Architecture",
+          "action": "Refactor architectural bottleneck: healtheng",
+          "rationale": "High betweenness \u2014 changes here cascade to many other modules.",
+          "effort": "HIGH",
+          "modules": [
+            "healtheng"
+          ]
+        },
+        {
+          "priority": 2,
+          "category": "Complexity",
+          "action": "Remove ~22 dead code definitions",
+          "rationale": "Unreferenced code increases maintenance burden.",
+          "effort": "LOW",
+          "modules": []
+        },
+        {
+          "priority": 3,
+          "category": "Team",
+          "action": "Cross-train contributors on core modules",
+          "rationale": "Bus factor is 1 \u2014 knowledge is too concentrated.",
+          "effort": "MEDIUM",
+          "modules": []
+        }
+      ],
+      "forecast": {
+        "is_declining": false,
+        "slope": 0.0,
+        "commits_to_critical": null,
+        "current_score": 83.35,
+        "projected_score_in_10": 83.35,
+        "danger_zones": [],
+        "debt_growth_rate": 0.0
+      },
+      "graph": {
+        "nodes": [
+          {
+            "id": "healtheng",
+            "instability": 0.0,
+            "pagerank": 1.0,
+            "risk": 0.0,
+            "path": "healtheng.py"
+          }
+        ],
+        "edges": []
+      },
+      "timestamp": 1779131318.0,
+      "author": "Pratyush",
+      "commit_message": "Initial Commit by Patty"
+    }
+  ],
+  "graph": {
+    "nodes": [
+      {
+        "id": "healtheng",
+        "instability": 0.0,
+        "pagerank": 1.0,
+        "risk": 0.0,
+        "path": "healtheng.py"
+      }
+    ],
+    "edges": []
+  },
+  "forecast": {
+    "is_declining": false,
+    "slope": 0.0,
+    "commits_to_critical": null,
+    "current_score": 83.35,
+    "projected_score_in_10": 83.35,
+    "danger_zones": [],
+    "debt_growth_rate": 0.0
+  },
+  "insights": [
+    {
+      "severity": "CRITICAL",
+      "category": "Team",
+      "title": "Bus Factor = 1 (Single Point of Failure)",
+      "detail": "A single contributor owns the majority of files. This is a critical knowledge risk \u2014 bus factor is 1.",
+      "commit_sha": "cecd3a92",
+      "affected_modules": []
+    },
+    {
+      "severity": "WARNING",
+      "category": "Complexity",
+      "title": "High Code Duplication (30%)",
+      "detail": "Significant code duplication detected. Extract shared utilities.",
+      "commit_sha": "cecd3a92",
+      "affected_modules": []
+    },
+    {
+      "severity": "INFO",
+      "category": "Architecture",
+      "title": "Architectural Bottlenecks Identified",
+      "detail": "High betweenness centrality detected in: healtheng. Changes here cascade widely.",
+      "commit_sha": "cecd3a92",
+      "affected_modules": [
+        "healtheng"
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": 1,
+      "category": "Architecture",
+      "action": "Refactor architectural bottleneck: healtheng",
+      "rationale": "High betweenness \u2014 changes here cascade to many other modules.",
+      "effort": "HIGH",
+      "modules": [
+        "healtheng"
+      ]
+    },
+    {
+      "priority": 2,
+      "category": "Complexity",
+      "action": "Remove ~22 dead code definitions",
+      "rationale": "Unreferenced code increases maintenance burden.",
+      "effort": "LOW",
+      "modules": []
+    },
+    {
+      "priority": 3,
+      "category": "Team",
+      "action": "Cross-train contributors on core modules",
+      "rationale": "Bus factor is 1 \u2014 knowledge is too concentrated.",
+      "effort": "MEDIUM",
+      "modules": []
+    }
+  ],
+  "summary": {
+    "total_commits": 1,
+    "current_score": 83.35,
+    "min_score": 83.35,
+    "max_score": 83.35
+  }
+}

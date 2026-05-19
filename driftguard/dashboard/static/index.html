@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DriftGuard — Repository Health Intelligence</title>
+  <meta name="description" content="Advanced repository health intelligence system — architecture drift, dependency analysis, and evolution metrics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- =========================================================
+       SIDEBAR
+  ========================================================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">⬡</div>
+        <div class="logo-text">
+          <span class="logo-name">DriftGuard</span>
+          <span class="logo-sub">Health Intelligence</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item active" data-panel="overview" href="#" id="nav-overview">
+        <span class="nav-icon">📊</span><span>Overview</span>
+      </a>
+      <a class="nav-item" data-panel="timeline" href="#" id="nav-timeline">
+        <span class="nav-icon">📈</span><span>Health Timeline</span>
+      </a>
+      <a class="nav-item" data-panel="graph" href="#" id="nav-graph">
+        <span class="nav-icon">🕸️</span><span>Dependency Graph</span>
+      </a>
+      <a class="nav-item" data-panel="heatmap" href="#" id="nav-heatmap">
+        <span class="nav-icon">🌡️</span><span>Coupling Heatmap</span>
+      </a>
+      <a class="nav-item" data-panel="insights" href="#" id="nav-insights">
+        <span class="nav-icon">💡</span><span>Insights</span>
+      </a>
+      <a class="nav-item" data-panel="recommendations" href="#" id="nav-recommendations">
+        <span class="nav-icon">🔧</span><span>Recommendations</span>
+      </a>
+      <a class="nav-item" data-panel="forecast" href="#" id="nav-forecast">
+        <span class="nav-icon">🔮</span><span>Forecast</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="version-badge">v2.0 · Graph Intelligence</div>
+    </div>
+  </aside>
+
+  <!-- =========================================================
+       MAIN CONTENT
+  ========================================================= -->
+  <main class="main-content">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-title" id="repo-title">Loading analysis...</span>
+      </div>
+      <div class="topbar-right">
+        <div class="commit-badge" id="commit-count">— commits</div>
+        <div class="score-badge" id="top-score">—</div>
+      </div>
+    </header>
+
+    <!-- ====================================================
+         PANEL: Overview
+    ==================================================== -->
+    <section class="panel active" id="panel-overview">
+
+      <!-- Score gauges row -->
+      <div class="gauges-row">
+        <div class="gauge-card" id="gauge-overall">
+          <canvas id="gauge-canvas-overall" width="140" height="140"></canvas>
+          <div class="gauge-label">Overall</div>
+          <div class="gauge-value" id="gauge-val-overall">—</div>
+        </div>
+        <div class="gauge-card" id="gauge-arch">
+          <canvas id="gauge-canvas-arch" width="100" height="100"></canvas>
+          <div class="gauge-label">Architecture</div>
+          <div class="gauge-value" id="gauge-val-arch">—</div>
+        </div>
+        <div class="gauge-card" id="gauge-complexity">
+          <canvas id="gauge-canvas-complexity" width="100" height="100"></canvas>
+          <div class="gauge-label">Complexity</div>
+          <div class="gauge-value" id="gauge-val-complexity">—</div>
+        </div>
+        <div class="gauge-card" id="gauge-dep">
+          <canvas id="gauge-canvas-dep" width="100" height="100"></canvas>
+          <div class="gauge-label">Dependency</div>
+          <div class="gauge-value" id="gauge-val-dep">—</div>
+        </div>
+        <div class="gauge-card" id="gauge-evo">
+          <canvas id="gauge-canvas-evo" width="100" height="100"></canvas>
+          <div class="gauge-label">Evolution</div>
+          <div class="gauge-value" id="gauge-val-evo">—</div>
+        </div>
+        <div class="gauge-card" id="gauge-team">
+          <canvas id="gauge-canvas-team" width="100" height="100"></canvas>
+          <div class="gauge-label">Team</div>
+          <div class="gauge-value" id="gauge-val-team">—</div>
+        </div>
+      </div>
+
+      <!-- Stats cards -->
+      <div class="stats-row" id="stats-row"></div>
+
+      <!-- Mini timeline + hotspots -->
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header">Health Trend</div>
+          <div class="chart-container" style="height:220px">
+            <canvas id="mini-timeline-chart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Hotspot Files</div>
+          <div id="hotspot-list" class="hotspot-list"></div>
+        </div>
+      </div>
+
+      <!-- Latest insights preview -->
+      <div class="card">
+        <div class="card-header">Latest Insights</div>
+        <div id="overview-insights"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         PANEL: Timeline
+    ==================================================== -->
+    <section class="panel" id="panel-timeline">
+      <div class="card">
+        <div class="card-header">
+          Repository Health Timeline
+          <div class="playback-controls">
+            <button class="btn-sm" id="btn-play">▶ Play</button>
+            <button class="btn-sm" id="btn-pause">⏸ Pause</button>
+            <button class="btn-sm" id="btn-reset">⏮ Reset</button>
+          </div>
+        </div>
+        <div class="timeline-slider-row">
+          <label class="slider-label">Commit</label>
+          <input type="range" id="commit-slider" min="0" value="0" step="1" />
+          <span id="slider-sha" class="mono">—</span>
+        </div>
+        <div class="chart-container" style="height:340px">
+          <canvas id="timeline-chart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Domain Score Breakdown</div>
+        <div class="chart-container" style="height:260px">
+          <canvas id="domain-chart"></canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Commit Details</div>
+        <div id="commit-detail-box" class="commit-detail-box">
+          <p class="muted">Move the slider to inspect a commit.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         PANEL: Dependency Graph
+    ==================================================== -->
+    <section class="panel" id="panel-graph">
+      <div class="card graph-card">
+        <div class="card-header">
+          Dependency Graph
+          <div class="graph-legend">
+            <span class="legend-dot healthy"></span>Healthy
+            <span class="legend-dot warning"></span>At Risk
+            <span class="legend-dot critical"></span>Critical
+          </div>
+          <select id="graph-mode" class="select-sm">
+            <option value="instability">Color: Instability</option>
+            <option value="pagerank">Color: PageRank</option>
+            <option value="risk">Color: Risk</option>
+          </select>
+        </div>
+        <div id="graph-svg-container"></div>
+        <div id="graph-tooltip" class="graph-tooltip hidden"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         PANEL: Coupling Heatmap
+    ==================================================== -->
+    <section class="panel" id="panel-heatmap">
+      <div class="card">
+        <div class="card-header">Module Coupling Heatmap</div>
+        <div id="heatmap-container"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         PANEL: Insights
+    ==================================================== -->
+    <section class="panel" id="panel-insights">
+      <div class="card">
+        <div class="card-header">Architectural Intelligence Insights</div>
+        <div id="insights-list"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         PANEL: Recommendations
+    ==================================================== -->
+    <section class="panel" id="panel-recommendations">
+      <div class="card">
+        <div class="card-header">Refactor Recommendations</div>
+        <div id="recommendations-list"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================
+         PANEL: Forecast
+    ==================================================== -->
+    <section class="panel" id="panel-forecast">
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header">Collapse Forecast</div>
+          <div id="forecast-box"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">Danger Zones</div>
+          <div id="danger-zones"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">Score Projection (next 10 commits)</div>
+        <div class="chart-container" style="height:280px">
+          <canvas id="forecast-chart"></canvas>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main-content -->
+
+  <script src="app.js"></script>
+</body>
+</html>
